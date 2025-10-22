@@ -1,19 +1,20 @@
-<div class="cart">
+<div class="cart" *ngIf="cart">
   <div class="container">
-
-
     <div class="cart-title">
       Корзина
     </div>
-
-    <div class="cart-info">
+    <div class="cart-empty" *ngIf="!cart || cart.items.length === 0">
+      <div>В корзине нет товаров</div>
+      <button class="button" routerLink="/catalog">В каталог</button>
+    </div>
+    <div class="cart-info" *ngIf="cart && cart.items.length > 0">
       <div class="cart-products">
-        <div class="cart-product">
-          <div class="cart-product-image"></div>
-          <div class="cart-product-name">Сансевиерия трехпучковая Муншайн</div>
-          <count-selector></count-selector>
-          <div class="cart-product-price">100 BYN</div>
-          <div class="cart-product-remove">
+        <div class="cart-product" *ngFor="let cartProduct of cart.items">
+          <div class="cart-product-image" style="background-image: url({{serverStaticPath + cartProduct.product.image}})"></div>
+          <div class="cart-product-name">{{cartProduct.product.name}}</div>
+          <count-selector [count]="cartProduct.quantity"  (onCountChange)="updateCount(cartProduct.product.id, $event)"></count-selector>
+          <div class="cart-product-price">{{cartProduct.product.price}} BYN</div>
+          <div class="cart-product-remove" (click)="updateCount(cartProduct.product.id, 0)">
             <div class="cart-product-price"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
               <line x1="1.93562" y1="2.6499" x2="13.9564" y2="14.6707" stroke="#A8ABA7" stroke-linecap="round"/>
               <line x1="13.9238" y1="2.62996" x2="1.90301" y2="14.6508" stroke="#A8ABA7" stroke-linecap="round"/>
@@ -21,43 +22,18 @@
             </div>
           </div>
         </div>
-        <div class="cart-product">
-          <div class="cart-product-image"></div>
-          <div class="cart-product-name">Сансевиерия трехпучковая Муншайн</div>
-          <count-selector></count-selector>
-          <div class="cart-product-price">100 BYN</div>
-          <div class="cart-product-remove">
-            <div class="cart-product-price"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <line x1="1.93562" y1="2.6499" x2="13.9564" y2="14.6707" stroke="#A8ABA7" stroke-linecap="round"/>
-              <line x1="13.9238" y1="2.62996" x2="1.90301" y2="14.6508" stroke="#A8ABA7" stroke-linecap="round"/>
-            </svg>
-            </div>
-          </div>
-        </div>
-        <div class="cart-product">
-          <div class="cart-product-image"></div>
-          <div class="cart-product-name">Сансевиерия трехпучковая Муншайн</div>
-          <count-selector></count-selector>
-          <div class="cart-product-price">100 BYN</div>
-          <div class="cart-product-remove">
-            <div class="cart-product-price"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <line x1="1.93562" y1="2.6499" x2="13.9564" y2="14.6707" stroke="#A8ABA7" stroke-linecap="round"/>
-              <line x1="13.9238" y1="2.62996" x2="1.90301" y2="14.6508" stroke="#A8ABA7" stroke-linecap="round"/>
-            </svg>
-            </div>
-          </div>
-        </div>
+
       </div>
       <div class="cart-details">
         <div class="cart-details-info">
           <div class="cart-details-title">Ваш заказ</div>
           <div class="cart-details-info-item first">
             <div class="cart-details-info-item-text">Товаров:</div>
-            <div class="cart-details-info-item-data">4</div>
+            <div class="cart-details-info-item-data">{{totalCount}}</div>
           </div>
           <div class="cart-details-info-item">
             <div class="cart-details-info-item-text">Общая стоимость: </div>
-            <div class="cart-details-info-item-data">147 BYN</div>
+            <div class="cart-details-info-item-data">{{totalAmount}} BYN</div>
           </div>
           <div class="cart-details-info-delivery">* без учета доставки</div>
         </div>

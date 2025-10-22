@@ -13,6 +13,7 @@ export type ProductType = {
     id: string,
     name: string,
     url: string
-  }
+  },
+  countInCart?: number,
 
 }
