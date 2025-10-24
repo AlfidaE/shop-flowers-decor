@@ -6,6 +6,9 @@ import {ActivatedRoute} from "@angular/router";
 import {environment} from "../../../../environments/environment";
 import {CartType} from "../../../../types/cart.type";
 import {CartService} from "../../../shared/services/cart.service";
+import {FavoriteService} from "../../../shared/services/favorite.service";
+import {FavoriteType} from "../../../../types/favorite.type";
+import {DefaultResponseType} from "../../../../types/default-response.type";
 
 @Component({
   selector: 'app-detail',
@@ -48,7 +51,8 @@ export class DetailComponent implements OnInit {
 
   constructor(private productService: ProductService,
               private activatedRoute: ActivatedRoute,
-              private cartService: CartService,) { }
+              private cartService: CartService,
+              private favoriteService: FavoriteService) { }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params => {
@@ -101,6 +105,15 @@ export class DetailComponent implements OnInit {
         this.count = 1;
       })
 
+  }
+  addToFavorite() {
+      this.favoriteService.addFavorite(this.product.id)
+        .subscribe((data: FavoriteType | DefaultResponseType) => {
+          if ((data as DefaultResponseType).error !== undefined) {
+            throw new Error((data as DefaultResponseType).message);
+          }
+          this.product.isInFavorite = true;
+        })
   }
 }
 
