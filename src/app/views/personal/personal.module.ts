@@ -6,6 +6,7 @@ import { FavoriteComponent } from './favorite/favorite.component';
 import { InfoComponent } from './info/info.component';
 import { OrdersComponent } from './orders/orders.component';
 import {SharedModule} from "../../shared/shared.module";
+import {ReactiveFormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -17,7 +18,10 @@ import {SharedModule} from "../../shared/shared.module";
   imports: [
     CommonModule,
     PersonalRoutingModule,
+    ReactiveFormsModule,
+
     SharedModule,
+
   ]
 })
 export class PersonalModule { }

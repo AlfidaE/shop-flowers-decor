@@ -16,6 +16,11 @@
         <div class="favorite-product-price">{{product.price}} BYN</div>
         <div class="favorite-product-action">
           <button class="button" routerLink="/product/{{product.url}}">Открыть</button>
+<!--          <button class="button" *ngIf="!product.isInCart" (click)="addToCart(product)">-->
+<!--            В корзину-->
+<!--          </button>-->
+
+
         </div>
         <div class="favorite-product-remove" (click)="removeFromFavorites(product.id)">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">

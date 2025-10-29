@@ -3,6 +3,7 @@ import {FavoriteService} from "../../../shared/services/favorite.service";
 import {FavoriteType} from "../../../../types/favorite.type";
 import {DefaultResponseType} from "../../../../types/default-response.type";
 import {environment} from "../../../../environments/environment";
+import {CartService} from "../../../shared/services/cart.service";
 
 @Component({
   selector: 'app-favorite',
@@ -13,7 +14,8 @@ export class FavoriteComponent implements OnInit {
 
   products: FavoriteType[] = [];
   serverStaticPath = environment.serverStaticPath;
-  constructor(private favoriteService: FavoriteService) { }
+  constructor(private favoriteService: FavoriteService,
+              private cartService: CartService,) { }
 
   ngOnInit(): void {
     this.favoriteService.getFavorites()
@@ -37,6 +39,9 @@ export class FavoriteComponent implements OnInit {
         this.products = this.products.filter(item => item.id !== id);
       })
   }
+  // addToCartFromFavorite() {
+  //   this.cartService.addToCartFromFav(this.products.id, 0)
+  // }
 }
 
 
